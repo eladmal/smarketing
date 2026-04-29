@@ -43,7 +43,7 @@ export class CampaignMetrics extends BaseEntity {
   @Column({ name: 'raw_data', type: 'simple-json', nullable: true })
   rawData: Record<string, any>;
 
-  @Column({ name: 'recorded_at', type: 'datetime' })
+  @Column({ name: 'recorded_at', type: 'timestamptz' })
   recordedAt: Date;
 
   @ManyToOne(() => Campaign, { onDelete: 'CASCADE' })

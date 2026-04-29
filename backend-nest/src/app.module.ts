@@ -43,8 +43,8 @@ import { AppController } from './app.controller';
           type: 'postgres',
           url: dbUrl,
           autoLoadEntities: true,
-          synchronize: !isProd,
-          ssl: isProd ? { rejectUnauthorized: false } : false,
+          synchronize: cfg.get('DB_SYNC', 'false') === 'true' || !isProd,
+          ssl: false,
         };
       },
     }),

@@ -39,10 +39,10 @@ export default function Dashboard() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">
-            שלום, {user?.full_name?.split(' ')[0]} 👋
+            שלום, {user?.fullName?.split(' ')[0]} 👋
           </h1>
           <p className="text-gray-500 mt-1">
-            {user?.business_name ? `${user.business_name} — ` : ''}מוכן לקמפיין הבא?
+            {user?.businessName ? `${user.businessName} — ` : ''}מוכן לקמפיין הבא?
           </p>
         </div>
         <Link to="/campaigns/new" className="btn-primary flex items-center gap-2">

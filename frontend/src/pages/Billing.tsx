@@ -4,8 +4,8 @@ import { useAuth } from '../AuthContext'
 import { billingApi } from '../api'
 import toast from 'react-hot-toast'
 import {
-  CreditCard, Zap, Star, Building2, Check, Clock,
-  AlertTriangle, CheckCircle2, XCircle, RefreshCw, ExternalLink
+  Zap, Star, Building2, Check, Clock,
+  AlertTriangle, CheckCircle2, XCircle, ExternalLink
 } from 'lucide-react'
 
 const PLAN_INFO = {
@@ -157,9 +157,9 @@ export default function Billing() {
           <h2 className="text-lg font-bold text-gray-900 mb-4">שדרג את התוכנית</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             {([
-              { id: 'basic',    name: 'Basic',    price: 99,  icon: Zap,        features: ['5 קמפיינים', '2 פלטפורמות', 'קופי AI', 'ייצוא ZIP'] },
-              { id: 'pro',      name: 'Pro',      price: 299, icon: Star,       features: ['קמפיינים ללא הגבלה', 'כל הפלטפורמות', 'אופטימיזציה 48שע', 'אנליטיקס מלא'], highlight: true },
-              { id: 'business', name: 'Business', price: 799, icon: Building2,  features: ['כל מה שב-Pro', 'White-label', 'API גישה', 'מנהל חשבון'] },
+              { id: 'basic',    name: 'Basic',    price: 99,  icon: Zap,       highlight: false, features: ['5 קמפיינים', '2 פלטפורמות', 'קופי AI', 'ייצוא ZIP'] },
+              { id: 'pro',      name: 'Pro',      price: 299, icon: Star,      highlight: true,  features: ['קמפיינים ללא הגבלה', 'כל הפלטפורמות', 'אופטימיזציה 48שע', 'אנליטיקס מלא'] },
+              { id: 'business', name: 'Business', price: 799, icon: Building2, highlight: false, features: ['כל מה שב-Pro', 'White-label', 'API גישה', 'מנהל חשבון'] },
             ] as const).map((plan) => {
               const isCurrentPlan = sub?.plan === plan.id && sub?.status === 'active'
               const PlanIco = plan.icon

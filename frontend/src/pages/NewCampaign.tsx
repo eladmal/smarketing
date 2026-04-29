@@ -27,11 +27,11 @@ export default function NewCampaign() {
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({
     name: '',
-    product_name: '',
-    product_description: '',
+    productName: '',
+    productDescription: '',
     goal: '',
     platforms: ['facebook', 'instagram'],
-    target_audience: '',
+    targetAudience: '',
     budget: '',
     language: 'he',
   })
@@ -47,9 +47,9 @@ export default function NewCampaign() {
   }
 
   const canNext = () => {
-    if (step === 0) return form.name && form.product_name && form.product_description
+    if (step === 0) return form.name && form.productName && form.productDescription
     if (step === 1) return form.goal && form.platforms.length > 0
-    return form.target_audience
+    return form.targetAudience
   }
 
   const submit = async () => {
@@ -100,13 +100,13 @@ export default function NewCampaign() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">שם המוצר / שירות</label>
-              <input type="text" value={form.product_name} onChange={set('product_name')} className="input" placeholder='קורס מדיה חברתית' />
+              <input type="text" value={form.productName} onChange={set('productName')} className="input" placeholder='קורס מדיה חברתית' />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">תיאור המוצר / שירות</label>
               <textarea
-                value={form.product_description}
-                onChange={set('product_description')}
+                value={form.productDescription}
+                onChange={set('productDescription')}
                 className="input min-h-[100px] resize-y"
                 placeholder='תאר את המוצר, הייחודיות שלו, ולמה כדאי לקנות אותו...'
               />
@@ -179,8 +179,8 @@ export default function NewCampaign() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">תאר את קהל היעד</label>
               <textarea
-                value={form.target_audience}
-                onChange={set('target_audience')}
+                value={form.targetAudience}
+                onChange={set('targetAudience')}
                 className="input min-h-[100px] resize-y"
                 placeholder='לדוגמה: נשים בגילאי 25-45, עסקות בתחום האופנה, גרות בישראל, מתעניינות בקורסים דיגיטליים...'
               />

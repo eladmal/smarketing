@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Rubik', 'Segoe UI', 'system-ui', 'sans-serif'],
+      },
       colors: {
         brand: {
           50: '#f0f4ff',

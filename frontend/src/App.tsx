@@ -15,6 +15,7 @@ import Integrations from './pages/Integrations'
 import Billing from './pages/Billing'
 import Pricing from './pages/Pricing'
 import CheckoutSuccess from './pages/CheckoutSuccess'
+import LandingPage from './pages/LandingPage'
 
 function PrivateRoute({ children }: { children: ReactNode }) {
   const { token, loading } = useAuth()
@@ -33,6 +34,7 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Public */}
+      <Route path="/"                   element={<LandingPage />} />
       <Route path="/login"              element={<PublicRoute><Login /></PublicRoute>} />
       <Route path="/register"           element={<PublicRoute><Register /></PublicRoute>} />
       <Route path="/pricing"            element={<Pricing />} />
@@ -48,7 +50,7 @@ function AppRoutes() {
       <Route path="/integrations"       element={<PrivateRoute><Integrations /></PrivateRoute>} />
       <Route path="/billing"            element={<PrivateRoute><Billing /></PrivateRoute>} />
 
-      <Route path="/"                   element={<Navigate to="/dashboard" replace />} />
+      <Route path="*"                   element={<Navigate to="/" replace />} />
     </Routes>
   )
 }
@@ -61,7 +63,7 @@ export default function App() {
         <Toaster
           position="bottom-left"
           toastOptions={{
-            style: { fontFamily: 'Inter, sans-serif', direction: 'rtl', textAlign: 'right' },
+            style: { fontFamily: 'Rubik, sans-serif', direction: 'rtl', textAlign: 'right' },
             success: { iconTheme: { primary: '#2855f5', secondary: '#fff' } }
           }}
         />

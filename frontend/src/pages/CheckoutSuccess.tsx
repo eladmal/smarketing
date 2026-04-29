@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useSearchParams, useNavigate } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
 import { billingApi } from '../api'
 import { CheckCircle2, Zap, Loader2 } from 'lucide-react'
@@ -7,7 +7,6 @@ import { CheckCircle2, Zap, Loader2 } from 'lucide-react'
 export default function CheckoutSuccess() {
   const [searchParams] = useSearchParams()
   const { refreshSubscription } = useAuth()
-  const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
 
   const isDevMode = searchParams.get('dev') === '1'
