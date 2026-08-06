@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Check, Zap, Star, Building2 } from 'lucide-react'
+import { LogoBadge } from '../components/Logo'
 
 const plans = [
   {
@@ -71,9 +72,7 @@ export default function Pricing() {
       <header className="bg-white border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center">
-              <Zap size={16} className="text-white" />
-            </div>
+            <LogoBadge size="sm" />
             <span className="text-xl font-bold text-gray-900">Smarketing</span>
           </div>
           <div className="flex items-center gap-3">

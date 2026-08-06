@@ -7,6 +7,7 @@ export interface User {
   fullName: string
   businessName?: string
   businessType?: string
+  isAdmin?: boolean
 }
 
 export interface Subscription {
@@ -64,16 +65,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setSubscription(sub)
   }
 
+  const _mapUser = (raw: any): User => ({
+    id: raw.id,
+    email: raw.email,
+    fullName: raw.full_name ?? raw.fullName ?? '',
+    businessName: raw.business_name ?? raw.businessName,
+    businessType: raw.business_type ?? raw.businessType,
+    isAdmin: raw.is_admin ?? raw.isAdmin ?? false,
+  })
+
+  const _defaultSub = (): Subscription => ({
+    plan: 'pro',
+    status: 'active',
+    valid: true,
+    trialEndsAt: null,
+    currentPeriodEnd: null,
+    limits: { campaigns: 999, platforms: 999, aiOptimization: true, whiteLabel: true },
+    priceIls: 0,
+  })
+
   const login = async (email: string, password: string) => {
     const res = await authApi.login(email, password)
-    const { accessToken, user: u, subscription: sub } = res.data
-    _persist(accessToken, u, sub)
+    const tok = res.data.access_token ?? res.data.accessToken
+    const u   = _mapUser(res.data.user)
+    const sub = res.data.subscription ?? _defaultSub()
+    _persist(tok, u, sub)
   }
 
   const register = async (data: { email: string; password: string; fullName: string; businessName?: string; businessType?: string }) => {
     const res = await authApi.register(data)
-    const { accessToken, user: u, subscription: sub } = res.data
-    _persist(accessToken, u, sub)
+    const tok = res.data.access_token ?? res.data.accessToken
+    const u   = _mapUser(res.data.user)
+    const sub = res.data.subscription ?? _defaultSub()
+    _persist(tok, u, sub)
   }
 
   const refreshSubscription = async () => {

@@ -3,17 +3,22 @@ import { useAuth } from '../AuthContext'
 import AlertsPanel from './AlertsPanel'
 import {
   LayoutDashboard, Megaphone, Image, Users, LogOut,
-  Zap, ChevronLeft, Link2, CreditCard, Clock
+  ChevronLeft, Link2, CreditCard, Clock, FileText,
+  BarChart2, UserCheck, ShieldAlert
 } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { LogoBadge } from './Logo'
 
 const navItems = [
-  { to: '/dashboard',    label: 'דאשבורד',       icon: LayoutDashboard },
-  { to: '/campaigns',    label: 'קמפיינים',       icon: Megaphone },
-  { to: '/assets',       label: 'נכסים גרפיים',   icon: Image },
-  { to: '/audiences',    label: 'קהלי יעד',        icon: Users },
-  { to: '/integrations', label: 'חיבורים',         icon: Link2 },
-  { to: '/billing',      label: 'חיוב ומנוי',      icon: CreditCard },
+  { to: '/dashboard',    label: 'דאשבורד',           icon: LayoutDashboard },
+  { to: '/campaigns',    label: 'קמפיינים',           icon: Megaphone },
+  { to: '/copy',         label: 'קופי',               icon: FileText },
+  { to: '/assets',       label: 'נכסים גרפיים',       icon: Image },
+  { to: '/audiences',    label: 'קהלי יעד',            icon: Users },
+  { to: '/leads',        label: 'לידים ולקוחות',      icon: UserCheck },
+  { to: '/reports',      label: 'דוחות ואופטימיזציה', icon: BarChart2 },
+  { to: '/integrations', label: 'חיבורים',             icon: Link2 },
+  { to: '/billing',      label: 'חיוב ומנוי',          icon: CreditCard },
 ]
 
 const PLAN_LABEL: Record<string, string> = {
@@ -42,16 +47,14 @@ export default function Layout({ children }: { children: ReactNode }) {
         {/* Logo */}
         <div className="p-6 border-b border-gray-100">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center">
-              <Zap size={16} className="text-white" />
-            </div>
+            <LogoBadge size="sm" />
             <span className="text-xl font-bold text-gray-900">Smarketing</span>
           </div>
           <p className="text-xs text-gray-400 mt-1 mr-10">מערכת שיווק חכמה</p>
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {navItems.map(({ to, label, icon: Icon }) => {
             const active = location.pathname.startsWith(to)
             return (
@@ -101,6 +104,15 @@ export default function Layout({ children }: { children: ReactNode }) {
               <p className="text-xs text-gray-400 truncate">{user?.businessName || user?.email}</p>
             </div>
           </div>
+          {user?.isAdmin && (
+            <Link
+              to="/admin"
+              className="w-full flex items-center gap-2 text-sm text-red-600 hover:bg-red-50 px-3 py-2 rounded-lg transition-all mb-1 font-medium"
+            >
+              <ShieldAlert size={16} />
+              ניהול מערכת
+            </Link>
+          )}
           <button
             onClick={handleLogout}
             className="w-full flex items-center gap-2 text-sm text-gray-500 hover:text-red-500 hover:bg-red-50 px-3 py-2 rounded-lg transition-all"

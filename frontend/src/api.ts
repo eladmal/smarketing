@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // In production: set VITE_API_URL=https://api.yourdomain.com/api/v1
 // In dev: defaults to localhost:8000
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -30,8 +30,14 @@ export default api
 
 // Auth
 export const authApi = {
-  register: (data: { email: string; password: string; fullName: string; businessName?: string; businessType?: string }) =>
-    api.post('/auth/register', data),
+  register: (data: { email: string; password: string; fullName: string; username?: string; phone?: string; businessName?: string; businessType?: string }) =>
+    api.post('/auth/register', {
+      email: data.email,
+      password: data.password,
+      full_name: data.fullName,
+      business_name: data.businessName,
+      business_type: data.businessType,
+    }),
   login: (email: string, password: string) =>
     api.post('/auth/login', { email, password }),
   me: () => api.get('/auth/me'),
@@ -59,11 +65,10 @@ export const campaignsApi = {
 
 // Copy
 export const copyApi = {
-  generate: (campaign_id: number, tone?: string) =>
-    api.post('/copy/generate', { campaign_id, tone }),
-  improve: (copy_id: number, feedback: string) =>
-    api.post('/copy/improve', { copy_id, feedback }),
-  save: (data: object) => api.post('/copy/save', data),
+  generate: (campaignId: number, tone?: string) =>
+    api.post('/copy/generate', { campaignId, tone }),
+  improve: (id: number, feedback: string) =>
+    api.post(`/copy/${id}/improve`, { feedback }),
   delete: (id: number) => api.delete(`/copy/${id}`),
 }
 
@@ -80,11 +85,11 @@ export const audiencesApi = {
 // Assets
 export const assetsApi = {
   platformSizes: () => api.get('/assets/platform-sizes'),
-  upload: (file: File, campaignId?: number, platforms?: string) => {
+  upload: (file: File, campaignId?: number, sizeKeys?: string) => {
     const form = new FormData()
     form.append('file', file)
     if (campaignId) form.append('campaign_id', String(campaignId))
-    if (platforms) form.append('platforms', platforms)
+    if (sizeKeys) form.append('size_keys', sizeKeys)
     return api.post('/assets/upload', form, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })

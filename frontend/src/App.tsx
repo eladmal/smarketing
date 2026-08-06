@@ -11,11 +11,17 @@ import NewCampaign from './pages/NewCampaign'
 import CampaignDetail from './pages/CampaignDetail'
 import Assets from './pages/Assets'
 import AudiencesPage from './pages/AudiencesPage'
+import CopyPage from './pages/CopyPage'
 import Integrations from './pages/Integrations'
+import Reports from './pages/Reports'
+import Leads from './pages/Leads'
 import Billing from './pages/Billing'
 import Pricing from './pages/Pricing'
 import CheckoutSuccess from './pages/CheckoutSuccess'
 import LandingPage from './pages/LandingPage'
+import OAuthCallback from './pages/OAuthCallback'
+import AdminPanel from './pages/AdminPanel'
+import ResetPassword from './pages/ResetPassword'
 
 function PrivateRoute({ children }: { children: ReactNode }) {
   const { token, loading } = useAuth()
@@ -34,11 +40,13 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Public */}
-      <Route path="/"                   element={<LandingPage />} />
+      <Route path="/"                   element={<PublicRoute><LandingPage /></PublicRoute>} />
       <Route path="/login"              element={<PublicRoute><Login /></PublicRoute>} />
       <Route path="/register"           element={<PublicRoute><Register /></PublicRoute>} />
       <Route path="/pricing"            element={<Pricing />} />
+      <Route path="/reset-password"     element={<ResetPassword />} />
       <Route path="/billing/success"    element={<CheckoutSuccess />} />
+      <Route path="/integrations/callback/:platform" element={<OAuthCallback />} />
 
       {/* Private */}
       <Route path="/dashboard"          element={<PrivateRoute><Dashboard /></PrivateRoute>} />
@@ -46,10 +54,14 @@ function AppRoutes() {
       <Route path="/campaigns/new"      element={<PrivateRoute><NewCampaign /></PrivateRoute>} />
       <Route path="/campaigns/:id"      element={<PrivateRoute><CampaignDetail /></PrivateRoute>} />
       <Route path="/assets"             element={<PrivateRoute><Assets /></PrivateRoute>} />
+      <Route path="/copy"               element={<PrivateRoute><CopyPage /></PrivateRoute>} />
       <Route path="/audiences"          element={<PrivateRoute><AudiencesPage /></PrivateRoute>} />
+      <Route path="/leads"               element={<PrivateRoute><Leads /></PrivateRoute>} />
+      <Route path="/reports"             element={<PrivateRoute><Reports /></PrivateRoute>} />
       <Route path="/integrations"       element={<PrivateRoute><Integrations /></PrivateRoute>} />
       <Route path="/billing"            element={<PrivateRoute><Billing /></PrivateRoute>} />
 
+      <Route path="/admin"               element={<PrivateRoute><AdminPanel /></PrivateRoute>} />
       <Route path="*"                   element={<Navigate to="/" replace />} />
     </Routes>
   )

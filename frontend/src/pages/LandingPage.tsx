@@ -5,6 +5,7 @@ import {
   Sparkles, Shield, Download, ChevronDown
 } from 'lucide-react'
 import { useState } from 'react'
+import { LogoBadge } from '../components/Logo'
 
 const PLANS = [
   {
@@ -120,9 +121,7 @@ export default function LandingPage() {
       <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-brand-600 rounded-xl flex items-center justify-center">
-              <Zap size={18} className="text-white" />
-            </div>
+            <LogoBadge size="md" />
             <span className="text-xl font-bold text-gray-900">Smarketing</span>
           </div>
           <div className="hidden md:flex items-center gap-6 text-sm text-gray-600">
@@ -552,9 +551,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center">
-                <Zap size={16} className="text-white" />
-              </div>
+              <LogoBadge size="sm" />
               <span className="text-white font-bold text-lg">Smarketing</span>
             </div>
             <div className="flex gap-6 text-sm">
