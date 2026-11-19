@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="החצי הטכני של מנהל השיווק, בלי עוד משכורת. אוטומציות, דיוורים, מסעות לקוח, ניתוב לידים, תקלות, SEO ו-GEO - מחלקת שיווק טכנולוגית במיקור חוץ.">
+<meta property="og:title" content="SmarkeThink - מחלקת שיווק טכנולוגית במיקור חוץ">
+<meta property="og:description" content="החצי הטכני של מנהל השיווק, בלי עוד משכורת.">
+<meta property="og:url" content="https://tech.smarkethink.co.il/">
+<meta property="og:locale" content="he_IL">
+<link rel="canonical" href="https://tech.smarkethink.co.il/">
+<!-- GTM / Meta Pixel: להדביק כאן את הקוד אחרי שיהיו מזהים -->
+<title>SmarkeThink מחלקת שיווק טכנולוגית</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=Secular+One&display=swap">
+<style>
+/* Layout: a marketing "control room" - status board hero, then calm single-column sections on a cool slate ground, one cobalt accent, amber/red/green used only as system signals */
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --ink:#0F1E36; --muted:#55627A; --line:#D9DFEA;
+  --accent:#2347E8; --accent-ink:#FFFFFF; --accent-soft:#E6EBFF;
+  --ok:#14804A; --warn:#B26A00; --bad:#C2312B;
+  --font-display:"Secular One","IBM Plex Sans Hebrew",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans Hebrew",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1322; --surface:#121D31; --ink:#E7ECF5; --muted:#9AA7BE; --line:#24324B;
+  --accent:#7D97FF; --accent-ink:#0B1322; --accent-soft:#1B2A52;
+  --ok:#3FBF7A; --warn:#E3A33B; --bad:#F06A62; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B1322; --surface:#121D31; --ink:#E7ECF5; --muted:#9AA7BE; --line:#24324B;
+  --accent:#7D97FF; --accent-ink:#0B1322; --accent-soft:#1B2A52;
+  --ok:#3FBF7A; --warn:#E3A33B; --bad:#F06A62; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.65;direction:rtl}
+.page{direction:rtl}
+.wrap{max-width:1120px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--font-display);font-weight:400;line-height:1.2;text-wrap:balance;margin:0}
+h2{font-size:clamp(28px,4vw,40px)}
+h3{font-size:21px}
+p{margin:0}
+.lede{color:var(--muted);max-width:62ch}
+.eyebrow{font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;color:var(--accent);text-transform:uppercase}
+section{padding-block:72px}
+section + section{border-top:1px solid var(--line)}
+.sec-head{display:grid;gap:12px;margin-bottom:36px}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.logo{font-family:var(--font-display);font-size:22px;direction:ltr}
+.logo b{color:var(--accent);font-weight:400}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 16px/1 var(--font-body);padding:14px 22px;border-radius:10px;border:1px solid transparent;cursor:pointer;text-decoration:none;transition:transform .15s ease,background .15s ease}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-sm{padding:10px 16px;font-size:15px}
+
+/* hero */
+.hero{padding-block:64px 72px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero-grid > *{min-width:0}
+.hero h1{font-size:clamp(36px,5.6vw,62px);margin-block:14px 20px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lede{font-size:19px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.fine{font-size:14px;color:var(--muted);margin-top:14px}
+
+/* status board */
+.board{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 50px -30px rgba(15,30,54,.45);overflow:hidden}
+.board-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);font-size:14px}
+.board-top strong{font-weight:600}
+.tag{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;padding:3px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.rows{list-style:none;margin:0;padding:6px 0}
+.rows li{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:11px 18px;font-size:15px}
+.rows li + li{border-top:1px dashed var(--line)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 18%,transparent)}
+.dot.warn{background:var(--warn);box-shadow:0 0 0 4px color-mix(in srgb,var(--warn) 18%,transparent)}
+.dot.bad{background:var(--bad);box-shadow:0 0 0 4px color-mix(in srgb,var(--bad) 18%,transparent);animation:pulse 1.6s ease-in-out infinite}
+.state{font-family:var(--font-mono);font-size:12.5px;color:var(--muted);direction:ltr}
+.state.bad{color:var(--bad)}
+.ticket{margin:4px 18px 18px;padding:12px 14px;border-radius:10px;background:var(--accent-soft);font-size:14px;display:grid;gap:2px}
+.ticket .state{color:var(--accent)}
+@keyframes pulse{50%{box-shadow:0 0 0 8px color-mix(in srgb,var(--bad) 0%,transparent)}}
+@media (prefers-reduced-motion:reduce){.dot.bad{animation:none}.btn{transition:none}}
+
+/* problem */
+.roles{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.role{padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:15px}
+.role s{color:var(--muted)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.split > *{min-width:0}
+.quote{font-family:var(--font-display);font-size:clamp(22px,2.6vw,28px);line-height:1.35}
+
+/* services */
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.svc{background:var(--surface);padding:26px;display:grid;gap:8px;align-content:start}
+.svc .code{font-family:var(--font-mono);font-size:12px;color:var(--muted);direction:ltr;text-align:right}
+.svc p{color:var(--muted);font-size:15.5px}
+.svc.new h3::after{content:"חדש";font-family:var(--font-body);font-size:12px;font-weight:600;margin-inline-start:10px;padding:2px 8px;border-radius:999px;background:var(--accent);color:var(--accent-ink);vertical-align:middle}
+
+/* calculator */
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.calc > *{min-width:0;padding:30px}
+.calc-in{display:grid;gap:22px;border-inline-end:1px solid var(--line)}
+label{font-weight:600;font-size:15px;display:block;margin-bottom:8px}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.salary-val{font-family:var(--font-mono);font-size:15px;color:var(--muted)}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{margin:0;font-weight:500;padding:9px 14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--bg)}
+.seg input:checked + label{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.seg input:focus-visible + label{outline:3px solid var(--accent);outline-offset:2px}
+.calc-out{display:grid;gap:14px;align-content:center}
+.big{font-family:var(--font-display);font-size:clamp(40px,6vw,60px);line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.compare{display:grid;gap:8px;font-size:15px}
+.compare div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--line);padding-bottom:6px}
+.compare span:last-child{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:16px}
+.plan.feat{border:2px solid var(--accent);position:relative}
+.plan.feat::before{content:"הכי נבחרת";position:absolute;top:-13px;inset-inline-start:24px;background:var(--accent);color:var(--accent-ink);font-size:13px;font-weight:600;padding:4px 12px;border-radius:999px}
+.plan .for{color:var(--muted);font-size:15px;min-height:3.2em}
+.price{font-family:var(--font-display);font-size:42px;line-height:1;font-variant-numeric:tabular-nums}
+.price small{font-family:var(--font-body);font-size:15px;color:var(--muted);margin-inline-start:4px}
+.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:15.5px;flex:1}
+.plan li{display:grid;grid-template-columns:18px 1fr;gap:8px}
+.plan li::before{content:"✓";color:var(--ok);font-weight:700}
+.plan li.no{color:var(--muted)}
+.plan li.no::before{content:"–";color:var(--muted)}
+.setup{margin-top:24px;padding:18px 22px;border-radius:12px;background:var(--accent-soft);display:flex;flex-wrap:wrap;gap:8px 28px;font-size:15.5px}
+.setup b{font-weight:600}
+
+/* steps */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;counter-reset:s}
+.steps li{display:grid;gap:8px;align-content:start;counter-increment:s}
+.steps li::before{content:counter(s);font-family:var(--font-mono);font-size:14px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent)}
+.steps p{color:var(--muted);font-size:15.5px}
+
+/* sla */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:15.5px}
+th,td{padding:14px 18px;text-align:right;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+thead th{font-weight:600;background:var(--bg)}
+td.k{font-weight:600}
+td.k small{display:block;font-weight:400;color:var(--muted);font-size:13.5px}
+
+/* agents band */
+.band{background:var(--ink);color:var(--bg)}
+.band .wrap{padding-block:64px;display:grid;gap:16px;text-align:center;justify-items:center}
+.band h2{font-size:clamp(30px,4.6vw,48px)}
+.band p{max-width:60ch;opacity:.8}
+
+/* faq */
+.faq{display:grid;gap:10px;max-width:820px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px 20px}
+summary{cursor:pointer;font-weight:600;padding:14px 0;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--font-mono);color:var(--accent)}
+details[open] summary::after{content:"−"}
+details p{padding-bottom:16px;color:var(--muted)}
+
+/* form */
+.form-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start}
+.form-grid > *{min-width:0}
+form{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+form .full{grid-column:1/-1}
+input[type=text],input[type=tel],input[type=email],select{width:100%;font:inherit;font-size:16px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.notice{grid-column:1/-1;padding:12px 14px;border-radius:10px;background:var(--accent-soft);font-size:15px}
+.draft{font-family:var(--font-mono);font-size:12px;color:var(--warn);border:1px dashed var(--warn);border-radius:8px;padding:6px 10px;display:inline-block}
+
+footer{padding-block:32px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+
+@media (max-width:900px){
+  .hero-grid,.split,.form-grid{grid-template-columns:1fr;gap:36px}
+  .services,.plans,.steps{grid-template-columns:1fr 1fr}
+  .calc{grid-template-columns:1fr}
+  .calc-in{border-inline-end:0;border-bottom:1px solid var(--line)}
+}
+@media (max-width:620px){
+  body{font-size:16px}
+  section{padding-block:56px}
+  .services,.plans,.steps{grid-template-columns:1fr}
+  form{grid-template-columns:1fr;padding:22px}
+  .calc > *{padding:22px}
+  .bar .btn{display:none}
+}
+
+.hp{position:absolute;inset-inline-start:-9999px;width:1px;height:1px;overflow:hidden}
+button:disabled{opacity:.6;cursor:wait}
+</style>
+</head>
+<body>
+
+<div class="page" dir="rtl" lang="he">
+
+<header>
+  <div class="wrap bar">
+    <div class="logo">Smarke<b>T</b>hink</div>
+    <a class="btn btn-primary btn-sm" href="#audit">לתאם אבחון</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">מחלקת שיווק טכנולוגית במיקור חוץ</span>
+      <h1>החצי הטכני של מנהל השיווק. <em>בלי עוד משכורת.</em></h1>
+      <p class="lede">אוטומציות, דיוורים, מסעות לקוח, ניתוב לידים, תקלות, SEO ו-GEO. צוות הסוכנים שלנו בונה, מחבר ומתחזק את כל מערך השיווק הטכנולוגי שלכם, בחלק קטן מעלות של עובד.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#audit">לתאם אבחון</a>
+        <a class="btn btn-ghost" href="#calc">כמה תחסכו?</a>
+      </div>
+      <p class="fine">אבחון ללא עלות למי שממשיך להקמה.</p>
+    </div>
+
+    <div class="board" aria-label="דוגמה ללוח ניטור של מערך שיווק">
+      <div class="board-top">
+        <strong>מערך השיווק שלכם</strong>
+        <span class="tag">דוגמה</span>
+      </div>
+      <ul class="rows">
+        <li><span class="dot"></span><span>טופס לידים בדף הנחיתה</span><span class="state">OK · 2 min</span></li>
+        <li><span class="dot"></span><span>ניתוב ל-CRM ולגיליון</span><span class="state">OK · 2 min</span></li>
+        <li><span class="dot bad"></span><span>פיקסל מטא</span><span class="state bad">NO EVENTS · 3h</span></li>
+        <li><span class="dot"></span><span>מסע לקוח - ליד חדש</span><span class="state">5/5 sent</span></li>
+        <li><span class="dot warn"></span><span>נראות ב-ChatGPT ו-Gemini</span><span class="state">2/10 queries</span></li>
+        <li><span class="dot"></span><span>Search Console</span><span class="state">OK</span></li>
+      </ul>
+      <div class="ticket">
+        <span>תקלה קריטית זוהתה ונפתחה קריאה אוטומטית</span>
+        <span class="state">ticket #1042 · in progress</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap split">
+    <div class="sec-head">
+      <span class="eyebrow">הבעיה</span>
+      <h2>ממנהל שיווק אחד מצפים לעשות את העבודה של שבעה</h2>
+      <p class="lede">אסטרטגיה, תוכן וקמפיינים הם התפקיד. אבל בפועל רוב השבוע הולך על חיבורים שנשברו, דיוורים שלא יצאו ופיקסל שהפסיק לספור. ואז שואלים למה אין צמיחה.</p>
+      <div class="roles" aria-label="משימות טכניות שנופלות על מנהל השיווק">
+        <span class="role">מומחה אוטומציות</span>
+        <span class="role">איש CRM</span>
+        <span class="role">מנהל דיוורים</span>
+        <span class="role">מומחה SEO</span>
+        <span class="role">מתקן תקלות</span>
+        <span class="role">איש מדידה ואנליטיקס</span>
+        <span class="role">ועכשיו גם GEO</span>
+      </div>
+    </div>
+    <div class="sec-head">
+      <p class="quote">תנו למנהל השיווק לנהל. את הטכני תשאירו לנו.</p>
+      <p class="lede">אין לכם מנהל שיווק? אתם מקבלים מחלקה טכנולוגית שלמה בלי לגייס. יש לכם? הוא חוזר לעבוד על מה שמביא לקוחות.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">מה אנחנו לוקחים</span>
+      <h2>כל מה שצריך לבנות, לחבר ולתקן</h2>
+    </div>
+    <div class="services">
+      <div class="svc"><span class="code">Make · Zapier</span><h3>אוטומציות</h3><p>תהליכים שרצים לבד: מליד חדש ועד תזכורת לאיש המכירות, בלי העתק-הדבק.</p></div>
+      <div class="svc"><span class="code">Email · WhatsApp</span><h3>דיוורים ומסעות לקוח</h3><p>רצפי מיילים והודעות שמחממים לידים, מחזירים לקוחות ושומרים על קשר.</p></div>
+      <div class="svc"><span class="code">CRM · Sheets</span><h3>ניתוב לידים ו-CRM</h3><p>כל ליד מגיע למקום הנכון תוך שניות, עם התראה מיידית. אף ליד לא נופל בין הכיסאות.</p></div>
+      <div class="svc"><span class="code">Pixel · GTM · GA4</span><h3>מדידה וטיפול בתקלות</h3><p>פיקסלים, טאגים וטפסים תחת ניטור. אנחנו יודעים על התקלה לפני שאתם שמים לב.</p></div>
+      <div class="svc"><span class="code">Search Console</span><h3>SEO</h3><p>תשתית טכנית, תוכן ומעקב, כדי שימצאו אתכם בגוגל.</p></div>
+      <div class="svc new"><span class="code">ChatGPT · Gemini · Perplexity</span><h3>GEO</h3><p>כשלקוחות שואלים בינה מלאכותית על התחום שלכם, אתם רוצים להיות בתשובה. אנחנו בודקים ומשפרים את זה.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="calc">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">מחשבון</span>
+      <h2>כמה זה חוסך לכם בחודש?</h2>
+    </div>
+    <div class="calc">
+      <div class="calc-in">
+        <div>
+          <label for="salary">משכורת ברוטו של מנהל שיווק</label>
+          <input id="salary" type="range" min="10000" max="30000" step="500" value="18000">
+          <div class="salary-val" id="salaryVal">18,000 ₪</div>
+        </div>
+        <div>
+          <span id="planLabel" style="font-weight:600;font-size:15px;display:block;margin-bottom:8px">החבילה</span>
+          <div class="seg" role="radiogroup" aria-labelledby="planLabel">
+            <input type="radio" name="plan" id="p1" value="2900"><label for="p1">בסיס</label>
+            <input type="radio" name="plan" id="p2" value="5900"><label for="p2">צמיחה</label>
+            <input type="radio" name="plan" id="p3" value="9900" checked><label for="p3">מחלקה מלאה</label>
+          </div>
+        </div>
+      </div>
+      <div class="calc-out" aria-live="polite">
+        <span class="eyebrow">חיסכון חודשי</span>
+        <div class="big" id="saving">8,100 ₪</div>
+        <div class="compare">
+          <div><span>משכורת ברוטו</span><span id="cSalary">18,000 ₪</span></div>
+          <div><span>החבילה</span><span id="cPlan">9,900 ₪</span></div>
+          <div><span>חיסכון בשנה</span><span id="cYear">97,200 ₪</span></div>
+        </div>
+        <p class="fine">החישוב לפי משכורת ברוטו בלבד. עלות המעסיק בפועל גבוהה יותר (סוציאליות, גיוס, קליטה), כך שהחיסכון האמיתי גדול מזה. מחירי החבילות לא כוללים מע"מ.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="plans">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">חבילות</span>
+      <h2>בוחרים לפי מה שהעסק צריך עכשיו</h2>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>בסיס</h3>
+        <p class="for">לעסק שמקבל לידים ורוצה שהכול פשוט יעבוד</p>
+        <div class="price">2,900 ₪<small>לחודש + מע"מ</small></div>
+        <ul>
+          <li>ניטור וניתוב לידים, CRM</li>
+          <li>פיקסלים, טאגים ו-GA4</li>
+          <li>תקלות קריטיות ללא הגבלה</li>
+          <li>עד 4 תקלות רגילות ו-2 בקשות בחודש</li>
+          <li>אוטומציה חדשה אחת בחודש</li>
+          <li>בדיקת SEO רבעונית</li>
+          <li>דוח חודשי</li>
+          <li class="no">דיוורים ומסעות לקוח</li>
+        </ul>
+        <a class="btn btn-ghost" href="#audit">לתאם אבחון</a>
+      </div>
+      <div class="plan feat">
+        <h3>צמיחה</h3>
+        <p class="for">לעסק עם מנהל שיווק שטובע בטכני</p>
+        <div class="price">5,900 ₪<small>לחודש + מע"מ</small></div>
+        <ul>
+          <li>כל מה שבבסיס</li>
+          <li>עד 8 תקלות רגילות ו-6 בקשות בחודש</li>
+          <li>2 אוטומציות חדשות בחודש</li>
+          <li>דיוורים ומסעות לקוח</li>
+          <li>SEO שוטף</li>
+          <li>בדיקת GEO ודוח רבעוני</li>
+          <li>תגובה לתקלה קריטית תוך 4 שעות</li>
+        </ul>
+        <a class="btn btn-primary" href="#audit">לתאם אבחון</a>
+      </div>
+      <div class="plan">
+        <h3>מחלקה מלאה</h3>
+        <p class="for">לעסק שלא רוצה לגייס מנהל שיווק</p>
+        <div class="price">9,900 ₪<small>לחודש + מע"מ</small></div>
+        <ul>
+          <li>כל מה שבצמיחה</li>
+          <li>תקלות, בקשות ואוטומציות באופן שוטף</li>
+          <li>SEO ו-GEO שוטפים</li>
+          <li>פגישת אסטרטגיה חודשית</li>
+          <li>תוכנית עבודה רבעונית</li>
+          <li>תגובה לתקלה קריטית תוך 2 שעות</li>
+        </ul>
+        <a class="btn btn-ghost" href="#audit">לתאם אבחון</a>
+      </div>
+    </div>
+    <div class="setup">
+      <span><b>הקמה חד-פעמית:</b> 3,000 ₪ עד 3 ממשקים, 800 ₪ לכל ממשק נוסף</span>
+      <span><b>מערך המדידה</b> (פיקסל, GTM, GA4, Google Ads) נספר כממשק אחד</span>
+      <span><b>התחייבות:</b> מינימום 3 חודשים · 10% הנחה בהתחייבות שנתית</span>
+      <span><b>ניהול קמפיינים ממומנים:</b> חבילה נפרדת</span>
+      <span><b>כל המחירים לא כוללים מע"מ</b></span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">איך זה עובד</span>
+      <h2>משיחה ראשונה למערכת שרצה לבד</h2>
+    </div>
+    <ol class="steps">
+      <li><h3>אבחון</h3><p>בודקים פיקסלים, טפסים, CRM, אוטומציות, SEO ו-GEO. מקבלים דוח: מה שבור, כמה זה עולה לכם, ומה מומלץ. ללא עלות למי שממשיך להקמה.</p></li>
+      <li><h3>הקמה</h3><p>מחברים ומגדירים הכול, בודקים מקצה לקצה עם ליד ניסיון, ומוסרים תיעוד והדרכה קצרה.</p></li>
+      <li><h3>מחלקה שוטפת</h3><p>ניטור, תיקונים, שיפורים, SEO ו-GEO, ודוח חודשי שמראה בדיוק מה נעשה.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">זמני תגובה</span>
+      <h2>יודעים מראש מתי מטפלים</h2>
+      <p class="lede">ימי עבודה א'-ה', 9:00-18:00. תקלה קריטית מטופלת תמיד, בלי מכסה. אם משהו שבנינו נשבר בגללנו, התיקון עלינו.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>סוג פנייה</th><th>בסיס</th><th>צמיחה</th><th>מחלקה מלאה</th></tr></thead>
+        <tbody>
+          <tr><td class="k">תקלה קריטית<small>לידים הולכים לאיבוד, מדידה נפלה</small></td><td>עד 8 שעות</td><td>עד 4 שעות</td><td>עד 2 שעות</td></tr>
+          <tr><td class="k">תקלה רגילה<small>משהו שעבד והפסיק</small></td><td>עד 2 ימי עבודה</td><td>עד יום עבודה</td><td>באותו יום או למחרת בבוקר</td></tr>
+          <tr><td class="k">בקשה או שינוי<small>משהו חדש או שינוי בקיים</small></td><td>עד 5 ימי עבודה</td><td>עד 3 ימי עבודה</td><td>עד 2 ימי עבודה</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="band">
+  <div class="wrap">
+    <span class="eyebrow" style="color:inherit;opacity:.7">איך זה עולה כל כך פחות?</span>
+    <h2>זה לא אנחנו, זה הסוכנים שלנו</h2>
+    <p>צוות של סוכני בינה מלאכותית עושה את העבודה הטכנית השוטפת: מנטר, מזהה תקלות, בונה ומדווח. אנשי המקצוע שלנו מתכננים, בודקים ומאשרים. לכן אתם מקבלים מחלקה שלמה במחיר של חלק ממשכורת.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">שאלות</span>
+      <h2>מה ששואלים אותנו</h2>
+    </div>
+    <div class="faq">
+      <details><summary>זה מחליף את מנהל השיווק שלנו?</summary><p>אנחנו לוקחים את החצי הטכני של התפקיד. אם אין לכם מנהל שיווק, חבילת "מחלקה מלאה" כוללת גם פגישת אסטרטגיה חודשית ותוכנית רבעונית. אם יש לכם, הוא מתפנה לאסטרטגיה, תוכן וצמיחה.</p></details>
+      <details><summary>מה נחשב "ממשק" בהקמה?</summary><p>כל מערכת שמחברים או מגדירים: CRM, טופס, כלי דיוור, WhatsApp, Google Sheets וכו'. כל מערך המדידה (פיקסל, GTM, GA4, Google Ads) נספר כממשק אחד.</p></details>
+      <details><summary>מה קורה אם עוברים את המכסה?</summary><p>עבודה מעבר למכסה מתומחרת לפי שעה, ורק אחרי שאישרתם מראש. אין הפתעות בחשבונית.</p></details>
+      <details><summary>מה זה GEO ולמה זה חשוב?</summary><p>יותר ויותר אנשים שואלים את ChatGPT, Gemini או Perplexity "מי הכי טוב ב..." במקום לחפש בגוגל. GEO הוא העבודה שגורמת לעסק שלכם להופיע בתשובות האלה.</p></details>
+      <details><summary>ניהול קמפיינים כלול?</summary><p>ניהול קמפיינים ממומנים במטא, בגוגל ובלינקדאין הוא חבילה נפרדת, ואפשר לשלב אותה עם כל אחת מהחבילות. תקציב הפרסום משולם ישירות לפלטפורמות.</p></details>
+      <details><summary>האבחון באמת חינם?</summary><p>אם ממשיכים להקמה, כן. אם מחליטים שלא, משלמים על שעות האבחון בלבד (3-5 שעות), ומקבלים דוח מלא שאפשר לעבוד איתו גם בלעדינו.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="audit">
+  <div class="wrap form-grid">
+    <div class="sec-head">
+      <span class="eyebrow">אבחון</span>
+      <h2>בואו נבדוק מה שבור אצלכם</h2>
+      <p class="lede">משאירים פרטים, ואנחנו חוזרים לתאם אבחון. תוך כמה ימים תקבלו דוח: מה עובד, מה שבור, כמה זה עולה לכם ומה הצעד הבא.</p>
+    </div>
+    <form id="leadForm" novalidate>
+      <div><label for="fName">שם מלא</label><input id="fName" type="text" autocomplete="name" required></div>
+      <div><label for="fPhone">טלפון</label><input id="fPhone" type="tel" autocomplete="tel" required></div>
+      <div><label for="fEmail">אימייל</label><input id="fEmail" type="email" autocomplete="email"></div>
+      <div><label for="fCompany">שם העסק</label><input id="fCompany" type="text" autocomplete="organization"></div>
+      <div class="full"><label for="fMgr">יש לכם היום מנהל שיווק?</label>
+        <select id="fMgr"><option value="">בחרו</option><option>לא, ושוקלים לגייס</option><option>לא, ולא מתכננים</option><option>כן, והוא טובע בטכני</option><option>כן, ורוצים להוריד עלויות</option></select>
+      </div>
+      <div class="hp" aria-hidden="true"><label for="fWebsite">אתר</label><input id="fWebsite" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+      <p class="full fine" style="margin:0">בשליחת הטופס אתם מסכימים שניצור איתכם קשר בנוגע לשירות. <a href="/privacy">מדיניות פרטיות</a></p>
+      <button class="btn btn-primary full" type="submit" id="fSubmit">לתאם אבחון</button>
+      <div class="notice" id="formNotice" hidden></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>SmarkeThink · מחלקת שיווק טכנולוגית במיקור חוץ</span>
+    <span>זה לא אנחנו, זה הסוכנים שלנו · <a href="/accessibility">הצהרת נגישות</a> · <a href="/privacy">פרטיות</a></span>
+  </div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var fmt=function(n){return n.toLocaleString('he-IL')+' ₪'};
+  var s=document.getElementById('salary');
+  function calc(){
+    var sal=+s.value;
+    var p=+document.querySelector('input[name=plan]:checked').value;
+    var save=Math.max(0,sal-p);
+    document.getElementById('salaryVal').textContent=fmt(sal);
+    document.getElementById('saving').textContent=fmt(save);
+    document.getElementById('cSalary').textContent=fmt(sal);
+    document.getElementById('cPlan').textContent=fmt(p);
+    document.getElementById('cYear').textContent=fmt(save*12);
+  }
+  s.addEventListener('input',calc);
+  document.querySelectorAll('input[name=plan]').forEach(function(r){r.addEventListener('change',calc)});
+  calc();
+
+  var f=document.getElementById('leadForm'), n=document.getElementById('formNotice'), b=document.getElementById('fSubmit');
+  var v=function(id){return document.getElementById(id).value.trim()};
+  var qs=new URLSearchParams(location.search);
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    n.hidden=false;
+    var data={name:v('fName'),phone:v('fPhone'),email:v('fEmail'),company:v('fCompany'),has_marketing_manager:v('fMgr'),website:v('fWebsite'),
+      utm_source:qs.get('utm_source')||'',utm_medium:qs.get('utm_medium')||'',utm_campaign:qs.get('utm_campaign')||'',utm_content:qs.get('utm_content')||'',
+      gclid:qs.get('gclid')||'',fbclid:qs.get('fbclid')||'',page:location.href};
+    if(!data.name||!data.phone){n.textContent='כדי שנחזור אליכם צריך שם וטלפון.';return}
+    if(!/^[0-9+\-\s()]{9,15}$/.test(data.phone)){n.textContent='מספר הטלפון לא נראה תקין. בדקו ונסו שוב.';return}
+    b.disabled=true; n.textContent='שולחים...';
+    fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+      .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
+      .then(function(){
+        f.reset(); n.textContent='קיבלנו! נחזור אליכם בהקדם לתיאום האבחון.';
+        try{window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'generate_lead',form:'audit'})}catch(_){}
+        try{if(window.fbq)fbq('track','Lead')}catch(_){}
+      })
+      .catch(function(){n.textContent='משהו השתבש בשליחה. נסו שוב בעוד רגע.'})
+      .finally(function(){b.disabled=false});
+  });
+})();
+</script>
+</body>
+</html>
